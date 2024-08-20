@@ -3,13 +3,13 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "vmName": {
-        "value": ""
+        "value": "string"
       },
       "adminPassword": {
-        "value": ""
+        "value": "string"
       },
       "storageAccountName": {
-        "value": ""
+        "value": "string"
       }
     }
   }
