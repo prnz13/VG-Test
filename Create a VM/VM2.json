@@ -41,7 +41,7 @@
       "nicName": "[concat(parameters('vmName'), 'nic')]",
       "dataDiskName": "[concat(parameters('vmName'), '-datadisk0')]",
       "vnetId": "/subscriptions/c956ab6f-b8de-4d31-9179-5096bfe493f4/resourceGroups/vignesh/providers/Microsoft.Network/virtualNetworks/vickyvnet",
-      "subnetId": "[concat(variables('vnetId'), '/subnets/vickysubnet')]"
+      "subnetId": "[concat(variables('vnetId'), '/subnets/<subnet-name>')]"
     },
     "resources": [
       {
@@ -132,7 +132,7 @@
           "licenseType": "Windows_Server"
         },
         "tags": {
-          "name": "[variables('vmName')]"
+          "name": "[variables('vnetId')]"
         }
       },
       {
@@ -141,7 +141,7 @@
         "name": "[variables('publicIpName')]",
         "location": "[variables('location')]",
         "properties": {
-          "publicIPAllocationMethod": "Dynamic"
+          "publicIPAllocationMethod": "Static"
         }
       }
     ]
