@@ -44,17 +44,6 @@
     },
     "resources": [
       {
-        "type": "Microsoft.Compute/virtualMachines",
-        "apiVersion": "2021-07-01",
-        "name": "[parameters('vmName')]",
-        "location": "[variables('location')]",
-        "properties": {
-          "storageProfile": {
-            "dataDisks": []
-          }
-        }
-      },
-      {
         "type": "Microsoft.Compute/disks",
         "apiVersion": "2021-04-01",
         "name": "[parameters('dataDiskName')]",
