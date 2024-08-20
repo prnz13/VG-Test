@@ -1,0 +1,28 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "vmName": {
+        "value": "<VM_NAME>"
+      },
+      "adminPassword": {
+        "value": "<ADMIN_PASSWORD>"
+      },
+      "vmSize": {
+        "value": "Standard_D4s_v3"
+      },
+      "vnetName": {
+        "value": "<VNET_NAME>"
+      },
+      "subnetName": {
+        "value": "<SUBNET_NAME>"
+      },
+      "nicName": {
+        "value": "<NIC_NAME>"
+      },
+      "storageAccountName": {
+        "value": "<STORAGE_ACCOUNT_NAME>"
+      }
+    }
+  }
+  
