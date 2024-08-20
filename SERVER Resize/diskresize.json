@@ -1,0 +1,97 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "vmName": {
+        "type": "string",
+        "metadata": {
+          "description": "Enter the name of the Virtual Machine."
+        }
+      },
+      "dataDiskName": {
+        "type": "string",
+        "metadata": {
+          "description": "Enter the name of the data disk to resize."
+        }
+      },
+      "newDiskSizeGB": {
+        "type": "int",
+        "metadata": {
+          "description": "Enter the new size of the data disk in GB."
+        }
+      },
+      "nicName": {
+        "type": "string",
+        "metadata": {
+          "description": "Enter the name of the Network Interface associated with the VM."
+        }
+      },
+      "subnetId": {
+        "type": "string",
+        "metadata": {
+          "description": "Enter the resource ID of the Subnet."
+        }
+      },
+      "publicIpId": {
+        "type": "string",
+        "metadata": {
+          "description": "Enter the resource ID of the Public IP Address."
+        }
+      }
+    },
+    "variables": {
+      "location": "[resourceGroup().location]"
+    },
+    "resources": [
+      {
+        "type": "Microsoft.Compute/virtualMachines",
+        "apiVersion": "2021-07-01",
+        "name": "[parameters('vmName')]",
+        "location": "[variables('location')]",
+        "properties": {
+          "storageProfile": {
+            "dataDisks": []
+          }
+        }
+      },
+      {
+        "type": "Microsoft.Compute/disks",
+        "apiVersion": "2021-04-01",
+        "name": "[parameters('dataDiskName')]",
+        "location": "[variables('location')]",
+        "properties": {
+          "diskSizeGB": "[parameters('newDiskSizeGB')]"
+        }
+      },
+      {
+        "type": "Microsoft.Compute/virtualMachines",
+        "apiVersion": "2021-07-01",
+        "name": "[parameters('vmName')]",
+        "location": "[variables('location')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Compute/disks', parameters('dataDiskName'))]"
+        ],
+        "properties": {
+          "storageProfile": {
+            "dataDisks": [
+              {
+                "lun": 0,
+                "name": "[parameters('dataDiskName')]",
+                "createOption": "Attach",
+                "diskSizeGB": "[parameters('newDiskSizeGB')]",
+                "caching": "ReadWrite"
+              }
+            ]
+          },
+          "networkProfile": {
+            "networkInterfaces": [
+              {
+                "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('nicName'))]"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+  

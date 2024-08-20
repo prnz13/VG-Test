@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "vmName": {
-        "value": "string"
+        "value": "stri"
       },
       "adminPassword": {
-        "value": "string"
+        "value": "securestring"
       },
       "storageAccountName": {
         "value": "string"
