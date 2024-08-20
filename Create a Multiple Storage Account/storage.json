@@ -17,7 +17,7 @@
             "type": "Microsoft.Storage/storageAccounts",
             "apiVersion": "2023-04-01",
             "tags": {
-                "displayName": "[parameters('storageAccountNamePrefix')]"
+                "NAME": "[parameters('storageAccountNamePrefix')]"
             },
             "location": "[resourceGroup().location]",
             "kind": "StorageV2",
