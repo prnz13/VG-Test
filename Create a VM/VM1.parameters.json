@@ -8,17 +8,11 @@
       "adminPassword": {
         "value": "<ADMIN_PASSWORD>"
       },
-      "vmSize": {
-        "value": "Standard_D4s_v3"
+      "vnetId": {
+        "value": "<VNET_RESOURCE_ID>"
       },
-      "vnetName": {
-        "value": "<VNET_NAME>"
-      },
-      "subnetName": {
-        "value": "<SUBNET_NAME>"
-      },
-      "nicName": {
-        "value": "<NIC_NAME>"
+      "subnetId": {
+        "value": "<SUBNET_RESOURCE_ID>"
       },
       "storageAccountName": {
         "value": "<STORAGE_ACCOUNT_NAME>"
