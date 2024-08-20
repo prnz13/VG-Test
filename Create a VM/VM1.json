@@ -109,7 +109,8 @@
               "diskSizeGB": 50,
               "managedDisk": {
                 "storageAccountType": "StandardSSD_LRS"
-              }
+              },
+              "caching": "ReadWrite"
             }
           ]
         },
@@ -150,7 +151,7 @@
       "name": "[variables('publicIpName')]",
       "location": "[variables('location')]",
       "properties": {
-        "publicIPAllocationMethod": "Static"
+        "publicIPAllocationMethod": "Dynamic"
       }
     }
   ]
