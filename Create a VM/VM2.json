@@ -1,0 +1,149 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "vmName": {
+        "type": "string",
+        "metadata": {
+          "description": "Enter the name of the Virtual Machine."
+        }
+      },
+      "adminUsername": {
+        "type": "string",
+        "defaultValue": "vgadmin",
+        "metadata": {
+          "description": "Admin username for the Virtual Machine."
+        }
+      },
+      "adminPassword": {
+        "type": "securestring",
+        "metadata": {
+          "description": "Admin password for the Virtual Machine."
+        }
+      },
+      "vmSize": {
+        "type": "string",
+        "defaultValue": "Standard_D4s_v3",
+        "metadata": {
+          "description": "Select the size of the Virtual Machine."
+        }
+      },
+      "storageAccountName": {
+        "type": "string",
+        "metadata": {
+          "description": "Select the Storage Account for Boot Diagnostics."
+        }
+      }
+    },
+    "variables": {
+      "location": "[resourceGroup().location]",
+      "publicIpName": "[concat(parameters('vmName'), '-pip')]",
+      "nicName": "[concat(parameters('vmName'), 'nic')]",
+      "dataDiskName": "[concat(parameters('vmName'), '-datadisk0')]",
+      "vnetId": "/subscriptions/<subscription-id>/resourceGroups/<resource-group-name>/providers/Microsoft.Network/virtualNetworks/<vnet-name>",
+      "subnetId": "[concat(variables('vnetId'), '/subnets/<subnet-name>')]"
+    },
+    "resources": [
+      {
+        "type": "Microsoft.Network/networkInterfaces",
+        "apiVersion": "2021-08-01",
+        "name": "[variables('nicName')]",
+        "location": "[variables('location')]",
+        "properties": {
+          "ipConfigurations": [
+            {
+              "name": "ipconfig1",
+              "properties": {
+                "subnet": {
+                  "id": "[variables('subnetId')]"
+                },
+                "privateIPAllocationMethod": "Dynamic",
+                "publicIPAddress": {
+                  "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIpName'))]"
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "type": "Microsoft.Compute/virtualMachines",
+        "apiVersion": "2021-07-01",
+        "name": "[parameters('vmName')]",
+        "location": "[variables('location')]",
+        "dependsOn": [
+          "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))]"
+        ],
+        "properties": {
+          "hardwareProfile": {
+            "vmSize": "[parameters('vmSize')]"
+          },
+          "storageProfile": {
+            "imageReference": {
+              "publisher": "MicrosoftWindowsServer",
+              "offer": "WindowsServer",
+              "sku": "2022-Datacenter-smalldisk-g2",
+              "version": "latest"
+            },
+            "osDisk": {
+              "createOption": "FromImage",
+              "managedDisk": {
+                "storageAccountType": "StandardSSD_LRS"
+              }
+            },
+            "dataDisks": [
+              {
+                "lun": 0,
+                "name": "[variables('dataDiskName')]",
+                "createOption": "Empty",
+                "diskSizeGB": 50,
+                "managedDisk": {
+                  "storageAccountType": "StandardSSD_LRS"
+                },
+                "caching": "ReadWrite"
+              }
+            ]
+          },
+          "osProfile": {
+            "computerName": "[parameters('vmName')]",
+            "adminUsername": "[parameters('adminUsername')]",
+            "adminPassword": "[parameters('adminPassword')]",
+            "windowsConfiguration": {
+              "enableAutomaticUpdates": false,
+              "provisionVMAgent": true,
+              "patchSettings": {
+                "patchMode": "Manual"
+              }
+            }
+          },
+          "networkProfile": {
+            "networkInterfaces": [
+              {
+                "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('nicName'))]"
+              }
+            ]
+          },
+          "diagnosticsProfile": {
+            "bootDiagnostics": {
+              "enabled": true,
+              "storageUri": "[concat('https://', parameters('storageAccountName'), '.blob.core.windows.net/')]"
+            }
+          },
+          "licenseType": "Windows_Server"
+        },
+        "tags": {
+          "name": "[variables('vnetId')]"
+        }
+      },
+      {
+        "type": "Microsoft.Network/publicIPAddresses",
+        "apiVersion": "2021-08-01",
+        "name": "[variables('publicIpName')]",
+        "location": "[variables('location')]",
+        "properties": {
+          "publicIPAllocationMethod": "Dynamic"
+        }
+      }
+    ]
+  }
+  
