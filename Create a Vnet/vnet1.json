@@ -13,6 +13,18 @@
         "metadata": {
           "description": "Enter the IPv4 address space for the Virtual Network (e.g., 10.0.0.0/16)."
         }
+      },
+      "subnetName": {
+        "type": "string",
+        "metadata": {
+          "description": "Enter the name of the Subnet."
+        }
+      },
+      "subnetPrefix": {
+        "type": "string",
+        "metadata": {
+          "description": "Enter the IPv4 address space for the Subnet (e.g., 10.0.0.0/24)."
+        }
       }
     },
     "variables": {
@@ -29,10 +41,18 @@
             "addressPrefixes": [
               "[parameters('addressPrefix')]"
             ]
-          }
+          },
+          "subnets": [
+            {
+              "name": "[parameters('subnetName')]",
+              "properties": {
+                "addressPrefix": "[parameters('subnetPrefix')]"
+              }
+            }
+          ]
         },
         "tags": {
-          "name": "[parameters('vnetName')]"
+          "NAME": "[parameters('vnetName')]"
         }
       }
     ]
