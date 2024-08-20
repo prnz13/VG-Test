@@ -40,8 +40,8 @@
       "publicIpName": "[concat(parameters('vmName'), '-pip')]",
       "nicName": "[concat(parameters('vmName'), 'nic')]",
       "dataDiskName": "[concat(parameters('vmName'), '-datadisk0')]",
-      "vnetId": "/subscriptions/<subscription-id>/resourceGroups/<resource-group-name>/providers/Microsoft.Network/virtualNetworks/<vnet-name>",
-      "subnetId": "[concat(variables('vnetId'), '/subnets/<subnet-name>')]"
+      "vnetId": "/subscriptions/c956ab6f-b8de-4d31-9179-5096bfe493f4/resourceGroups/vignesh/providers/Microsoft.Network/virtualNetworks/vickyvnet",
+      "subnetId": "[concat(variables('vnetId'), '/subnets/vickysubnet')]"
     },
     "resources": [
       {
