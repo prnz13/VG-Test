@@ -10,7 +10,6 @@
       },
       "vmSize": {
         "type": "string",
-        "defaultValue": "Standard_D4s_v3",
         "metadata": {
           "description": "Select the new size of the Virtual Machine."
         }
