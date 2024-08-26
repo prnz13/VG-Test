@@ -1,0 +1,75 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "vmName": {
+        "type": "string",
+        "metadata": {
+          "description": "The name of the existing virtual machine."
+        }
+      },
+      "existingResourceGroup": {
+        "type": "string",
+        "metadata": {
+          "description": "The name of the resource group containing the VM."
+        }
+      },
+      "dataDiskName": {
+        "type": "string",
+        "metadata": {
+          "description": "The name of the data disk."
+        }
+      },
+      "diskSizeGB": {
+        "type": "int",
+        "defaultValue": 128,
+        "metadata": {
+          "description": "The size of the data disk in GB."
+        }
+      },
+      "diskSku": {
+        "type": "string",
+        "defaultValue": "Standard_LRS",
+        "allowedValues": [
+          "Standard_LRS",
+          "Premium_LRS",
+          "StandardSSD_LRS",
+          "UltraSSD_LRS"
+        ],
+        "metadata": {
+          "description": "The SKU of the managed disk."
+        }
+      },
+      "lun": {
+        "type": "int",
+        "defaultValue": 0,
+        "metadata": {
+          "description": "The logical unit number (LUN) for the data disk."
+        }
+      }
+    },
+    "resources": [
+      {
+        "type": "Microsoft.Compute/virtualMachines",
+        "apiVersion": "2022-11-01",
+        "name": "[parameters('vmName')]",
+        "location": "[resourceGroup().location]",
+        "properties": {
+          "storageProfile": {
+            "dataDisks": [
+              {
+                "lun": "[parameters('lun')]",
+                "name": "[parameters('dataDiskName')]",
+                "diskSizeGB": "[parameters('diskSizeGB')]",
+                "createOption": "Empty",
+                "managedDisk": {
+                  "storageAccountType": "[parameters('diskSku')]"
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+  
