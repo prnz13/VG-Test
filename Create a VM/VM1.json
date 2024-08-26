@@ -142,7 +142,7 @@
         "licenseType": "Windows_Server"
       },
       "tags": {
-        "name": "[parameters('vnetId')]"
+        "name": "[parameters('vmName')]"
       }
     },
     {
