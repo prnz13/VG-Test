@@ -1,3 +1,7 @@
+ ## Deploy to Azure
+
+[![DeploytoAzure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fprnz13%2FVG-Test%2Fmain%2FCreate%2520a%2520VM%2FVM2.json)
+
 This file we have to define the below items to create a VM
 1. VM name
 2. VM Password
@@ -14,7 +18,3 @@ Pre-defined values are the following
 8. Data Disk Name
 9. Tags set Name and the VM NAME as a Value
 10. Windows O.S Specified as 2022
-
- ## Deploy to Azure
-
-[![DeploytoAzure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fprnz13%2FVG-Test%2Fmain%2FCreate%2520a%2520VM%2FVM2.json)
