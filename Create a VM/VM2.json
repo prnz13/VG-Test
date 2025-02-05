@@ -37,7 +37,6 @@
     },
     "variables": {
       "location": "[resourceGroup().location]",
-      "publicIpName": "[concat(parameters('vmName'), '-pip')]",
       "nicName": "[concat(parameters('vmName'), 'nic')]",
       "dataDiskName": "[concat(parameters('vmName'), '-datadisk0')]",
       "vnetId": "/subscriptions/c956ab6f-b8de-4d31-9179-5096bfe493f4/resourceGroups/prince-test/providers/Microsoft.Network/virtualNetworks/test-vnet",
@@ -57,10 +56,6 @@
                 "subnet": {
                   "id": "[variables('subnetId')]"
                 },
-                "privateIPAllocationMethod": "Dynamic",
-                "publicIPAddress": {
-                  "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIpName'))]"
-                }
               }
             }
           ]
@@ -134,16 +129,8 @@
         "tags": {
           "NAME": "[parameters('vmName')]"
         }
-      },
-      {
-        "type": "Microsoft.Network/publicIPAddresses",
-        "apiVersion": "2021-08-01",
-        "name": "[variables('publicIpName')]",
-        "location": "[variables('location')]",
-        "properties": {
-          "publicIPAllocationMethod": "Static"
-        }
       }
+     }
     ]
   }
   
