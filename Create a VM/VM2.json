@@ -49,7 +49,7 @@
   },
   "variables": {
     "location": "[resourceGroup().location]",
-    "nicName": "[concat(parameters('vmName'), '-nic')]",
+    "nicName": "[concat(parameters('vmName'), '-nic')]",  // Updated NIC name to include a hyphen
     "dataDiskName": "[concat(parameters('vmName'), '-datadisk0')]"
   },
   "resources": [
@@ -66,7 +66,7 @@
               "subnet": {
                 "id": "[parameters('subnetId')]"
               },
-              "privateIPAllocationMethod": "Dynamic"
+              "privateIPAllocationMethod": "Dynamic"  // Removed publicIPAddress property
             }
           }
         ]
